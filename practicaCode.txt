@@ -1,0 +1,143 @@
+Интерфейс:
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+public class Avtorizacia : MonoBehaviour
+{
+    
+    [SerializeField] GameObject AvtPanel;
+    [SerializeField] GameObject Menu;
+    [SerializeField] GameObject ZemGroup;
+    [SerializeField] GameObject Merkuri;
+    [SerializeField] GameObject Venera;
+    [SerializeField] GameObject Earth;
+    [SerializeField] GameObject Mars;
+   
+    
+    
+    public void AvtPanelClose()
+    {
+        
+            AvtPanel.SetActive(!AvtPanel.activeSelf);
+            Menu.SetActive(!Menu.activeSelf);
+           
+    }
+    public void zemGroup()
+    {
+        Menu.SetActive(!Menu.activeSelf);
+        ZemGroup.SetActive(!ZemGroup.activeSelf);
+    }   
+    public void Exit()
+    {
+        Application.Quit();
+    }
+    public void backMenu()
+    {
+        if (Merkuri.activeInHierarchy)
+        {
+            Merkuri.SetActive(!Merkuri.activeSelf);
+            ZemGroup.SetActive(!Menu.activeSelf);
+        }
+        else if (Venera.activeInHierarchy)
+        {
+            Venera.SetActive(!Venera.activeSelf);
+            ZemGroup.SetActive(!Menu.activeSelf);
+        }
+        else if (Earth.activeInHierarchy)
+        {
+            Earth.SetActive(!Earth.activeSelf);
+            ZemGroup.SetActive(!Menu.activeSelf);
+        }
+        else if (Mars.activeInHierarchy)
+        {
+            Mars.SetActive(!Mars.activeSelf);
+            ZemGroup.SetActive(!Menu.activeSelf);
+        }
+    }
+    public void backGlavnoyeMenu()
+    {
+        ZemGroup.SetActive(!ZemGroup.activeSelf);
+        Menu.SetActive(!Menu.activeSelf);
+    }
+    public void MerkuriPanel()
+    {
+        ZemGroup.SetActive(!ZemGroup.activeSelf);
+        Merkuri.SetActive(!Merkuri.activeSelf);       
+    }
+    public void VeneraPanel()
+    {
+        ZemGroup.SetActive(!ZemGroup.activeSelf);
+        Venera.SetActive(!Venera.activeSelf);
+    }
+    public void ErathPanel()
+    {
+        ZemGroup.SetActive(!ZemGroup.activeSelf);
+        Earth.SetActive(!Earth.activeSelf);
+    }
+    public void MarsPanel()
+    {
+        ZemGroup.SetActive(!ZemGroup.activeSelf);
+        Mars.SetActive(!Mars.activeSelf);
+    }
+}
+
+
+Вращение планет
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class RotationPlanet : MonoBehaviour
+{
+    
+    public float rotationSpeed = 100f; // Скорость вращения
+    private Vector3 startTouchPosition; // Позиция начала касания
+    private Vector3 currentTouchPosition; // Текущая позиция касания
+
+    void Update()
+    {        
+        if (Input.GetMouseButton(0))
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                startTouchPosition = Input.mousePosition;
+            }
+            currentTouchPosition = Input.mousePosition;      
+            Vector3 delta = startTouchPosition - currentTouchPosition;            
+            transform.Rotate(Vector3.up, delta.x * rotationSpeed * Time.deltaTime);
+        }
+    }
+}
+
+
+Анимация планет
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ZemGroupPanelScript : MonoBehaviour
+{
+    [SerializeField] bool isPaused;
+    [SerializeField] Animator anim;
+    [SerializeField] GameObject play;
+    [SerializeField] GameObject pause;
+    public void PauseAnimationToggle()
+    {
+        isPaused = !isPaused;
+        play.SetActive(!play.activeSelf);
+        pause.SetActive(!pause.activeSelf);
+        if (isPaused)
+        {
+            anim.speed = 0f; // Останавливаем анимацию
+        }
+        else
+        {
+            anim.speed = 1f; // Возобновляем анимацию
+        }
+    }
+}
